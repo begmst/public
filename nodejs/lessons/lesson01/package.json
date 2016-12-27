@@ -1,5 +1,14 @@
 {
-    "name": "Node-lesson 01",
+    "name": "Node-lesson01",
     "description": "",
-    "version": "0.1.1"
+    "version": "0.1.1",
+    "dependencies": {
+      "async": "1.x"
+    },
+    "devDependencies": {
+      "gulp": "*"
+    },
+    "stripts": {
+      "start": "node app5.js"
+    }
 }
