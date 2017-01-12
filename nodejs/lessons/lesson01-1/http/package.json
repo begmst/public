@@ -1,0 +1,19 @@
+{
+  "name": "znode-dev-http",
+  "version": "1.0.1",
+  "description": "Hello nodejs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/begmst/public.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/begmst/public/issues"
+  },
+  "homepage": "https://github.com/begmst/public#readme"
+}
