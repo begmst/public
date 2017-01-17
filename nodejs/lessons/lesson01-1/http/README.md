@@ -8,6 +8,6 @@ npm install
 
 ## Run
 ```
-node app.js
+node index.js
 ```
-Runs at http://127.0.0.1:3000
+Runs at http://localhost:3000
