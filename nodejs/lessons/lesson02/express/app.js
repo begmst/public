@@ -30,7 +30,7 @@ app.all('/test/', function (req, res) {
     res.json('{ test: "Hello test" }');
 });
 
-
+/*
 app.all('/api/:apiVersion/*', function (req, res) {
 
     var filePath = req.path + req.method.toLowerCase() + '.json';
@@ -54,6 +54,34 @@ app.all('/api/:apiVersion/*', function (req, res) {
 
     });
 });
+*/
+
+app.get('/api/:apiVersion/*', function (req, res) {
+
+    var response = [];
+    console.log(req);
+
+    fs.readdir(req.path, function (err, files) {
+
+        for (var i = 0; i < files.length; i++) {
+
+            fs.readFile(req.folderPatch + files[i] + '/' + req.method.toLowerCase() + '.json', function (err, data) {
+                if (err) throw err;
+
+                response.push(JSON.parse(data.toString()));
+
+                checkDone();
+            });
+        }
+
+        function checkDone() {
+            if (files.length === response.length) {
+                res.json(response);
+            }
+        }
+    });
+});
+
 
 
 //app.get('/api/1.0/users', function (req, res) {
