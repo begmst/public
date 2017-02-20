@@ -10,6 +10,7 @@ class WebLoader {
         console.log('Web Loader start.');
         this.element = element;
         this.level = level;
+        this.visitedUrls = [];
 
         console.log(this);
     }
@@ -27,7 +28,7 @@ class WebLoader {
                     console.log('No redis record.');
                     this.loadPage(url).then(response => {
                         console.log('LoadPage outer response:', response);
-                        result.push(response);
+                        result.push({[pageKey]: response});
                         let r = redisClient.set(pageKey, JSON.stringify(result));
                         resolve(result);
                     });
