@@ -20,6 +20,9 @@ console.log(url, element, level);
 var webloader = new WebLoader(element, level);
 console.log('Webloader: ', webloader);
 
-var result = webloader.run(url);
-console.log('Webloader result: ', result);
+var r = webloader.run(url).then(
+    result => console.log('WebLoader promise result:', result),
+    error => console.log('WebLoader promise error:', error)
+);
+console.log('Webloader result: ', r);
 console.log('Webloader cli end.');
