@@ -1,1 +1,1 @@
-echo "xxx value"
+echo "xy value"
