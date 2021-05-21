@@ -1,0 +1,5 @@
+1
+Longest string in the file
+var
+Another string
+Another var

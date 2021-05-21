@@ -1,0 +1,8 @@
+Line 0 has 1 symbols: 1
+Line 1 has 26 symbols: Longest string in the file
+Line 2 has 3 symbols: var
+Line 3 has 14 symbols: Another string
+Line 4 has 11 symbols: Another var
+File has 5 total lines.
+The longest line has 26 symbols: Longest string in the file
+My name is James Bond. I was born on 1964-11-30
