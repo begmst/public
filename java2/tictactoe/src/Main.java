@@ -1,16 +1,22 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
 
 	public static void main(String[] args) {
 		System.out.println("Very beginning...");
 		Player player1 = new HumanPlayer(FieldType.X);
-		Player player2 = new HumanPlayer(FieldType.O);
+		Player player2 = new RandomPlayer(FieldType.O);
 		Game game = new Game(player1, player2);
 		game.start();
 	}
-
+	
 }
 
 class Field {
@@ -56,6 +62,7 @@ class Player {
 	}
 	
 	public Move getMove(Board board) {
+		System.out.print(String.format("Player %s, make a move: ", this.getPlayerType().getSymbol()));
 		return new Move('a', 0);
 	}
 	
@@ -75,13 +82,44 @@ class HumanPlayer extends Player {
 	 * @Override
 	 */
 	public Move getMove(Board board) {
+		super.getMove(board);
 		Scanner s = new Scanner(System.in);
-		System.out.print(String.format("Player %s, make a move: ", this.getPlayerType().getSymbol()));
         String line = s.nextLine();
         Move move = new Move(Character.toUpperCase(line.charAt(0)), Integer.parseInt(String.valueOf(line.charAt(1))));
 		return move;
 	}
+}
+
+class RandomPlayer extends Player {
 	
+	public RandomPlayer(FieldType playerType) {
+		super(playerType);
+	}
+
+	/**
+	 * @Override
+	 */
+	public Move getMove(Board board) {
+		super.getMove(board);
+		int i = 0;
+		List<Integer> freeFields = new ArrayList<Integer>();
+		for (Field field: board) {
+			if (field.isFree()) {
+				System.out.println(i);
+				freeFields.add(i);
+			}
+			i++;
+		}
+		Random random = new Random();
+		int rnd = random.nextInt(freeFields.size());
+		int freeField = freeFields.get(rnd);
+		System.out.println(freeFields);
+		int row = freeField / board.getSize();
+		int col = freeField % board.getSize();
+        Move move = new Move((char)(row + 'A'), col);
+		System.out.println(move);
+		return move;
+	}
 }
 
 class Game {
@@ -99,10 +137,9 @@ class Game {
 	
 	public void start() {
 		System.out.println("Game start!");
+		this.board.show();
+		Move move;
 		while (!this.board.isFinished()) {
-			this.board.show();
-
-			Move move;
 			do {
 				move = this.player1.getMove(this.board);
 			} while (!this.board.isValidMove(move));
@@ -132,14 +169,12 @@ class Game {
 				System.out.println(String.format("GAME OVER!"));
 				break;
 			}
-
-			this.board.show();
 		}
 	}
 	
 }
 
-class Board {
+class Board implements Iterable<Field> {
 	
 	private int N = 3;
 	private Field[][] fields;
@@ -153,6 +188,10 @@ class Board {
 				this.fields[i][j] = new Field();
 			}
 		}
+	}
+	
+	public int getSize() {
+		return this.N;
 	}
 	
 	public boolean isFinished() {
@@ -218,8 +257,8 @@ class Board {
 	
 	public boolean isValidMove(Move move) {
 		boolean isValid = (move.getRow() < this.N)
-			&& (move.getColumn() < this.N)
-			&& this.fields[move.getRow()][move.getColumn()].isFree();
+			&& (move.getCol() < this.N)
+			&& this.fields[move.getRow()][move.getCol()].isFree();
 		return isValid;
 	}
 	
@@ -244,7 +283,12 @@ class Board {
 	}
 	
 	public void makeMove(Player player, Move move) {
-		this.fields[move.getRow()][move.getColumn()].setType(player.getPlayerType());
+		this.fields[move.getRow()][move.getCol()].setType(player.getPlayerType());
+	}
+	
+	public Iterator<Field> iterator() {
+		List<Field> list = Arrays.stream(this.fields).flatMap(Arrays::stream).collect(Collectors.toList());
+		return list.iterator();
 	}
 	
 }
@@ -255,7 +299,7 @@ record Move(char row, int column) {
 		return (int)this.row - (int)'A';
 	}
 	
-	public int getColumn() {
+	public int getCol() {
 		return this.column;
 	}
 	
