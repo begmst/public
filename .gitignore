@@ -1,2 +1,4 @@
 .idea
 nohup.out
+*.class
+.DS_Store
