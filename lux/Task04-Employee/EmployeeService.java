@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,10 +11,14 @@ public class EmployeeService {
         this.employees = new ArrayList<Employee>();
     }
 
-    public void printEmployees() {
-        for (Employee employee : this.employees) {
+    public void printEmployees(List<Employee> employees) {
+        for (Employee employee : employees) {
             System.out.println(employee);
         }
+    }
+
+    public void printEmployees() {
+        this.printEmployees(this.employees);
     }
 
     public double calculateSalaryAndBonus() {
@@ -67,4 +73,30 @@ public class EmployeeService {
         this.employees.add(employee);
     }
 
+    public List<Employee> sortByName() {
+        List<Employee> employeeList = new ArrayList<>(this.employees);
+        employeeList.sort(new Comparator<Employee>() {
+            @Override
+            public int compare(Employee o1, Employee o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        return employeeList;
+    }
+
+    public List<Employee> sortByNameSalary() {
+        List<Employee> employeeList = new ArrayList<>(this.employees);
+        return employeeList
+            .stream()
+            .sorted(Comparator.comparing(Employee::getName).thenComparing(Employee::getSalary))
+            .collect(Collectors.toList());
+    }
+
+    public List<Employee> sortByAgeSalary() {
+        List<Employee> employeeList = new ArrayList<>(this.employees);
+        return employeeList
+            .stream()
+            .sorted(Comparator.comparing(Employee::getAge).thenComparing(Employee::getName))
+            .collect(Collectors.toList());
+    }
 }

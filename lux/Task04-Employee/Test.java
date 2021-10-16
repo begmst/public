@@ -1,14 +1,19 @@
+import java.util.List;
+
 public class Test {
     public static void main(String[] args) {
         EmployeeService service = new EmployeeService();
         EmployeeFactory factory = new EmployeeFactory();
 
-        Employee[] employees = factory.generateEmployees(100);
+        Employee[] employees = factory.generateEmployees(10);
         for (Employee employee : employees) {
             service.add(employee);
         }
 
         service.printEmployees();
+        System.out.println();
+        System.out.println(String.format("We need to pay them $%.2f", service.calculateSalaryAndBonus()));
+        System.out.println();
 
         int number = 5;
         Employee employeeNo5 = service.getById(number);
@@ -54,5 +59,25 @@ public class Test {
 
         System.out.println("List of all employees:");
         service.printEmployees();
+
+        List<Employee> sortedEmployees;
+
+        System.out.println();
+        System.out.println("Sorted employees by name:");
+        sortedEmployees = service.sortByName();
+        service.printEmployees(sortedEmployees);
+        System.out.println();
+
+        System.out.println();
+        System.out.println("Sorted employees by name and salary:");
+        sortedEmployees = service.sortByNameSalary();
+        service.printEmployees(sortedEmployees);
+        System.out.println();
+
+        System.out.println();
+        System.out.println("Sorted employees by age and salary:");
+        sortedEmployees = service.sortByAgeSalary();
+        service.printEmployees(sortedEmployees);
+        System.out.println();
     }
 }

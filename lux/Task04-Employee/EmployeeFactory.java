@@ -35,7 +35,7 @@ public class EmployeeFactory {
                 + EmployeeFactory.lastNames[random.nextInt(EmployeeFactory.lastNames.length)];
             employees[i] = new Employee(
                 name,
-                random.nextInt(18,65),
+                random.nextInt(18, 65),
                 random.nextDouble(100, 1000),
                 Gender.values()[random.nextInt(Gender.values().length)],
                 random.nextInt(100),
