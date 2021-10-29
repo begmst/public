@@ -1,12 +1,9 @@
-package com.luxoft.datastructures.stack;
+package com.luxoft.datastructures.queue;
 
-import com.luxoft.datastructures.queue.ArrayQueue;
 import junit.framework.TestCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ArrayQueueTest extends TestCase {
 
