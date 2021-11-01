@@ -35,6 +35,7 @@ public class Reflection {
         System.out.println("\n");
         System.out.println("Метод принимает объект и меняет все его приватные поля на их нулевые значение (null, 0, false etc)+");
         Reflection.setDefaultPrivateValues(instance);
+        System.out.println(instance);
     }
 
     //    Метод принимает класс и возвращает созданный объект этого класса
@@ -128,6 +129,11 @@ public class Reflection {
                 field.trySetAccessible();
             }
             var newValue = Array.get(Array.newInstance(field.getType(), 1), 0);
+            try {
+                field.set(object, newValue);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
             System.out.println(String.format("Default value for %s is %s.", field.getType(), newValue));
         }
     }
