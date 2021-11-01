@@ -11,7 +11,7 @@ public class Reflection {
         System.out.println("Метод принимает класс и возвращает созданный объект этого класса");
         Object instance = null;
         instance = Reflection.createInstance(Car.class);
-        System.out.println(((Car)instance));
+        System.out.println((instance));
         // Error here
 //        instance = Reflection.createInstance(Car.class, "Tesla", 1000);
 //        System.out.println(((Car)instance));
