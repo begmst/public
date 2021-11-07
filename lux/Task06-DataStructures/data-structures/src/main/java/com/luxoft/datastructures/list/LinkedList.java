@@ -133,14 +133,7 @@ public class LinkedList implements List, Iterable {
 
     @Override
     public boolean contains(Object value) {
-        Node current = head;
-        do {
-            if (current.value.equals(value)) {
-                return true;
-            }
-            current = current.next;
-        } while (current != null);
-        return false;
+        return indexOf(value) != -1;
     }
 
     @Override
