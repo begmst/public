@@ -37,18 +37,12 @@ public class FileAnalyzer {
     }
 
     public FileAnalyzer(String filename) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        String line;
         try {
-            BufferedReader br = new BufferedReader(new FileReader(filename));
-            line = br.readLine();
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
-            }
-            br.close();
-            content = sb.toString();
+            File file = new File(filename);
+            FileInputStream inputFileStream = new FileInputStream(file);
+            byte[] contentFile = inputFileStream.readAllBytes();
+            inputFileStream.close();
+            content = new String(contentFile);
         } catch (FileNotFoundException e) {
             System.err.println(String.format("File %s not found.", filename));
             throw e;
