@@ -26,7 +26,7 @@ public class FileAnalyzer {
                 fa = new FileAnalyzer(filename);
                 long wordCount = fa.getWordCount(word);
                 System.out.println(String.format("File %s contains \"%s\" %d times.", filename, word, wordCount));
-                String[] sentences = fa.getFileLinesWithWord(word);
+                String[] sentences = fa.getSentencesWithWord(word);
                 System.out.println(String.format("Sentences with \"%s\":", word));
                 for (String sentence : sentences) {
                     System.out.println(sentence.trim());
@@ -43,6 +43,7 @@ public class FileAnalyzer {
             byte[] contentFile = inputFileStream.readAllBytes();
             inputFileStream.close();
             content = new String(contentFile);
+            this.setContent(content);
         } catch (FileNotFoundException e) {
             System.err.println(String.format("File %s not found.", filename));
             throw e;
@@ -52,20 +53,20 @@ public class FileAnalyzer {
         }
     }
 
-    private long getWordCount(String word) {
+    public long getWordCount(String word) {
         long result;
         Pattern pattern = Pattern.compile(String.format("\\b%s\\b", word));
-        Matcher matcher = pattern.matcher(content);
+        Matcher matcher = pattern.matcher(getContent());
         result = matcher.results().count();
         return result;
     }
 
 
-    public String[] getFileLinesWithWord(String word) {
+    public String[] getSentencesWithWord(String word) {
         List<String> result = new ArrayList<String>();
 
         Pattern pattern = Pattern.compile(String.format("\\b%s\\b", word));
-        String[] sentences = content.split(String.format("((?<=%1$s)|(?=%1$s))", "[!\\.\\?]"));
+        String[] sentences = getContent().split(String.format("((?<=%1$s)|(?=%1$s))", "[!\\.\\?]"));
         for (String sentence : sentences) {
             Matcher matcher = pattern.matcher(sentence);
             if (matcher.find()) {
@@ -73,6 +74,14 @@ public class FileAnalyzer {
             }
         }
         return result.toArray(String[]::new);
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
 }
