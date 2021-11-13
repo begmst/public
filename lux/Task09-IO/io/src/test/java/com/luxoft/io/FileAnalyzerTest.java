@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.net.URL;
 
 import static junit.framework.Assert.*;
 import static org.mockito.Mockito.*;
@@ -13,10 +14,8 @@ public class FileAnalyzerTest {
 
     @BeforeEach
     protected void setUp() throws IOException {
-        this.fa = spy(new FileAnalyzer(
-                this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath()
-                        + "../../data/java.txt"
-        ));
+        URL filepath = this.getClass().getClassLoader().getResource("fileanalyzer/java.txt");
+        this.fa = spy(new FileAnalyzer(filepath.getPath()));
     }
 
     @Test
